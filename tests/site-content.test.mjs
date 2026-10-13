@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
 
 const siteSource = await readFile(new URL('../lib/site.ts', import.meta.url), 'utf8');
 
@@ -50,6 +49,8 @@ test('story is guest-facing and explains the LOW EMBER philosophy', () => {
   assert.match(storySource, /records/i);
 });
 
+import { existsSync } from 'node:fs';
+
 const privateNightsUrl = new URL('../app/private-nights/page.tsx', import.meta.url);
 const dietaryUrl = new URL('../app/dietary/page.tsx', import.meta.url);
 
@@ -68,4 +69,12 @@ test('Dietary route exists and communicates allergy handling without guarantees'
   assert.match(source, /cross-contact/i);
   assert.match(source, /reservation/i);
   assert.doesNotMatch(source, /guarantee|100% safe|allergen-free/i);
+});
+
+const globalCss = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
+const routeCss = await readFile(new URL('../app/route-styles.css', import.meta.url), 'utf8');
+
+test('public design system uses no CSS gradients', () => {
+  assert.doesNotMatch(globalCss, /gradient\s*\(/i);
+  assert.doesNotMatch(routeCss, /gradient\s*\(/i);
 });
