@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 
 const siteSource = await readFile(new URL('../lib/site.ts', import.meta.url), 'utf8');
 
@@ -49,8 +50,6 @@ test('story is guest-facing and explains the LOW EMBER philosophy', () => {
   assert.match(storySource, /records/i);
 });
 
-import { existsSync } from 'node:fs';
-
 const privateNightsUrl = new URL('../app/private-nights/page.tsx', import.meta.url);
 const dietaryUrl = new URL('../app/dietary/page.tsx', import.meta.url);
 
@@ -77,4 +76,13 @@ const routeCss = await readFile(new URL('../app/route-styles.css', import.meta.u
 test('public design system uses no CSS gradients', () => {
   assert.doesNotMatch(globalCss, /gradient\s*\(/i);
   assert.doesNotMatch(routeCss, /gradient\s*\(/i);
+});
+
+const notFoundUrl = new URL('../app/not-found.tsx', import.meta.url);
+test('404 experience stays inside the LOW EMBER brand', async () => {
+  assert.equal(existsSync(notFoundUrl), true);
+  const source = await readFile(notFoundUrl, 'utf8');
+  assert.match(source, /Wrong door\./);
+  assert.match(source, /href="\/"/);
+  assert.match(source, /href="\/reservations"/);
 });
