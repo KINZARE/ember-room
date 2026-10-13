@@ -5,11 +5,11 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { default: "Ember Room — Cocktails, fire & late plates", template: "%s · Ember Room" },
+  title: { default: `${site.name} — ${site.tagline}`, template: `%s · ${site.name}` },
   description: site.description,
   robots: { index: true, follow: true },
   openGraph: {
-    title: "Ember Room — Cocktails, fire & late plates",
+    title: `${site.name} — ${site.tagline}`,
     description: site.description,
     type: "website",
     images: [{ url: site.heroImage }],
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f9f5ee",
+  themeColor: "#181712",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
