@@ -8,3 +8,31 @@ Pre-flight interfaces:
 - Task 1 produces `site`, `hours`, `nav`, `menuSections`, `privateNightFormats`, `dietaryNotes`; Tasks 2–5 consume them.
 - Task 2 produces shared shell/styles; Tasks 3–5 consume them.
 - Ruling: source tests use Node built-ins and inspect files directly, keeping dependencies minimal and compatible with the existing project.
+
+Task 1: RED observed — `node --test tests/site-content.test.mjs` failed on missing LOW EMBER brand/routes and stale Wijnhaven/contact data.
+Task 1: GREEN observed — `node --test tests/site-content.test.mjs` passed 2/2 after centralizing brand and venue data.
+Task 1: Ruling — local verification mirrors current branch files because the container cannot resolve github.com directly; GitHub branch remains source of truth and receives the exact verified file contents.
+
+Task 2: RED observed — extended source tests failed on missing `Fire after dark.`, missing `Records after ten`, missing `/private-nights` homepage link and guest-facing fictional/portfolio footer copy.
+Task 2: GREEN observed — `node --test tests/site-content.test.mjs` passed 4/4 after rebuilding the shared header/footer/homepage and visual system.
+Task 2: Ruling — motion is CSS-only and decorative; all nonessential animation is disabled under `prefers-reduced-motion`.
+
+Task 3: RED observed — menu tests failed on missing dietary route/demo copy and story tests failed on the old fictional metadata and missing fire/low-light/records philosophy.
+Task 3: GREEN observed — `node --test tests/site-content.test.mjs` passed 6/6 after rebuilding Menu and Story.
+Task 3: Ruling — route-specific responsive styles live in `app/route-styles.css` imported after `globals.css`; this keeps the shared design system focused while preserving the approved CSS-only architecture.
+
+Task 4: RED observed — reservation tests failed on missing `Table request received` success state and stale fictional/demo reservation copy without canonical hours/walk-in context.
+Task 4: GREEN observed — `node --test tests/*.test.mjs` passed 9/9 after rebuilding the reservation experience.
+Task 4: Ruling — the form computes today's date in the browser and uses it as the minimum date; submission remains `preventDefault()` only with no network path.
+
+Task 5: RED observed — route-existence tests failed because `app/private-nights/page.tsx` and `app/dietary/page.tsx` did not exist.
+Task 5: GREEN observed — `node --test tests/*.test.mjs` passed 11/11 after adding Private Nights and Dietary routes.
+Task 5: Ruling — Private Nights uses qualitative formats only; Dietary explicitly communicates cross-contact risk without medical-safety claims.
+
+Release audit: source review caught CSS gradients despite the no-gradient spec. They were replaced with solid transparent overlays and a regression test was added. Suite passed 12/12.
+
+Task 6: RED observed — branded 404 test failed because `app/not-found.tsx` did not exist.
+Task 6: GREEN observed — full suite passed 13/13 after adding the LOW EMBER `Wrong door.` not-found experience.
+Task 6: Ruling — no new dependency or route logic was required; the 404 reuses the shared LOW EMBER shell and CTAs.
+
+Release QA note: Vercel preview compilation and TypeScript passed and route-level HTTP checks were performed. Full interactive screenshot/mobile browser QA could not be rerun because the TinyFish wallet had insufficient funds; this limitation must not be represented as a completed browser run.
