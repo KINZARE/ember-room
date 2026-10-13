@@ -20,3 +20,7 @@ Task 2: Ruling — motion is CSS-only and decorative; all nonessential animation
 Task 3: RED observed — menu tests failed on missing dietary route/demo copy and story tests failed on the old fictional metadata and missing fire/low-light/records philosophy.
 Task 3: GREEN observed — `node --test tests/site-content.test.mjs` passed 6/6 after rebuilding Menu and Story.
 Task 3: Ruling — route-specific responsive styles live in `app/route-styles.css` imported after `globals.css`; this keeps the shared design system focused while preserving the approved CSS-only architecture.
+
+Task 4: RED observed — reservation tests failed on missing `Table request received` success state and stale fictional/demo reservation copy without canonical hours/walk-in context.
+Task 4: GREEN observed — `node --test tests/*.test.mjs` passed 9/9 after rebuilding the reservation experience.
+Task 4: Ruling — the form computes today's date in the browser and uses it as the minimum date; submission remains `preventDefault()` only with no network path.
