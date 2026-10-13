@@ -24,3 +24,7 @@ Task 3: Ruling — route-specific responsive styles live in `app/route-styles.cs
 Task 4: RED observed — reservation tests failed on missing `Table request received` success state and stale fictional/demo reservation copy without canonical hours/walk-in context.
 Task 4: GREEN observed — `node --test tests/*.test.mjs` passed 9/9 after rebuilding the reservation experience.
 Task 4: Ruling — the form computes today's date in the browser and uses it as the minimum date; submission remains `preventDefault()` only with no network path.
+
+Task 5: RED observed — route-existence tests failed because `app/private-nights/page.tsx` and `app/dietary/page.tsx` did not exist.
+Task 5: GREEN observed — `node --test tests/*.test.mjs` passed 11/11 after adding Private Nights and Dietary routes.
+Task 5: Ruling — Private Nights uses qualitative formats only; Dietary explicitly communicates cross-contact risk without medical-safety claims.

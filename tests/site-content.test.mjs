@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 
 const siteSource = await readFile(new URL('../lib/site.ts', import.meta.url), 'utf8');
 
@@ -47,4 +48,24 @@ test('story is guest-facing and explains the LOW EMBER philosophy', () => {
   assert.match(storySource, /fire/i);
   assert.match(storySource, /low light/i);
   assert.match(storySource, /records/i);
+});
+
+const privateNightsUrl = new URL('../app/private-nights/page.tsx', import.meta.url);
+const dietaryUrl = new URL('../app/dietary/page.tsx', import.meta.url);
+
+test('Private Nights route exists and sells formats without fake proof', async () => {
+  assert.equal(existsSync(privateNightsUrl), true);
+  const source = await readFile(privateNightsUrl, 'utf8');
+  assert.match(source, /privateNightFormats/);
+  assert.match(source, /\/reservations/);
+  assert.doesNotMatch(source, /testimonial|sold out|clients served|events hosted/i);
+});
+
+test('Dietary route exists and communicates allergy handling without guarantees', async () => {
+  assert.equal(existsSync(dietaryUrl), true);
+  const source = await readFile(dietaryUrl, 'utf8');
+  assert.match(source, /dietaryNotes/);
+  assert.match(source, /cross-contact/i);
+  assert.match(source, /reservation/i);
+  assert.doesNotMatch(source, /guarantee|100% safe|allergen-free/i);
 });
