@@ -28,3 +28,11 @@ Task 4: Ruling — the form computes today's date in the browser and uses it as 
 Task 5: RED observed — route-existence tests failed because `app/private-nights/page.tsx` and `app/dietary/page.tsx` did not exist.
 Task 5: GREEN observed — `node --test tests/*.test.mjs` passed 11/11 after adding Private Nights and Dietary routes.
 Task 5: Ruling — Private Nights uses qualitative formats only; Dietary explicitly communicates cross-contact risk without medical-safety claims.
+
+Release audit: source review caught CSS gradients despite the no-gradient spec. They were replaced with solid transparent overlays and a regression test was added. Suite passed 12/12.
+
+Task 6: RED observed — branded 404 test failed because `app/not-found.tsx` did not exist.
+Task 6: GREEN observed — full suite passed 13/13 after adding the LOW EMBER `Wrong door.` not-found experience.
+Task 6: Ruling — no new dependency or route logic was required; the 404 reuses the shared LOW EMBER shell and CTAs.
+
+Release QA note: Vercel preview compilation and TypeScript passed and route-level HTTP checks were performed. Full interactive screenshot/mobile browser QA could not be rerun because the TinyFish wallet had insufficient funds; this limitation must not be represented as a completed browser run.
