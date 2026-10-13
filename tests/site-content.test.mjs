@@ -31,3 +31,20 @@ test('footer never exposes portfolio/demo disclaimers to guests', () => {
   assert.doesNotMatch(footerSource, /Fictional hospitality concept/i);
   assert.doesNotMatch(footerSource, /Portfolio project/i);
 });
+
+const menuSource = await readFile(new URL('../app/menu/page.tsx', import.meta.url), 'utf8');
+const storySource = await readFile(new URL('../app/story/page.tsx', import.meta.url), 'utf8');
+
+test('menu exposes dietary guidance and the expanded menu system', () => {
+  assert.match(menuSource, /\/dietary/);
+  assert.match(menuSource, /menuSections/);
+  assert.match(siteSource, /Zero proof/);
+  assert.doesNotMatch(menuSource, /Sample menu|fictional portfolio/i);
+});
+
+test('story is guest-facing and explains the LOW EMBER philosophy', () => {
+  assert.doesNotMatch(storySource, /fictional story/i);
+  assert.match(storySource, /fire/i);
+  assert.match(storySource, /low light/i);
+  assert.match(storySource, /records/i);
+});
